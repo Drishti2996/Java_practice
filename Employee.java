@@ -10,9 +10,12 @@
 // (e.g., collecting elements into a List, Set, Map, etc.). 
 //It is part of the java.util.stream package.
 
+import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -149,6 +152,60 @@ deptSalaryMap.entrySet().stream()
     .forEach(entry -> 
         System.out.println("Department: " + entry.getKey() + ", Total Salary: " + entry.getValue()));
 
+
+      //  1. Streams: Intermediate Operations
+      //  Filter
+           // Used to filter elements based on a condition.
+        
+        List<Integer> numbers = List.of(1, 2, 3, 4, 5, 6);
+        List<Integer> evenNumbers = numbers.stream()
+            .filter(n -> n % 2 == 0)
+            .collect(Collectors.toList());
+        System.out.println(evenNumbers); // [2, 4, 6]
+
+
+        //Map
+    //Transforms each element into another form.
+    List<String> names = List.of("Alice", "Bob", "Charlie");
+List<Integer> nameLengths = names.stream()
+    .map(String::length)
+    .collect(Collectors.toList());
+System.out.println(nameLengths); // [5, 3, 7]
+
+
+//FlatMap
+//Flattens nested structures (like lists of lists).
+
+List<List<String>> nestedLists = List.of(
+    List.of("A", "B"),
+    List.of("C", "D"),
+    List.of("E", "F")
+);
+List<String> flatList = nestedLists.stream()
+    .flatMap(List::stream)
+    .collect(Collectors.toList());
+System.out.println(flatList); // [A, B, C, D, E, F]
+
+/**Practice Exercise: Intermediate Operations
+
+    Filter a list of numbers to retain only those greater than 10.
+    Transform a list of strings into their uppercase equivalents.
+    Flatten a list of lists of integers into a single list of integers. */
+
+    //Edge Cases
+   // Empty Streams: Handle empty streams using Optional or default values:
+
+    List<Integer> emptyList = List.of();
+    Optional<Integer> max = emptyList.stream().max(Integer::compareTo);
+    System.out.println(max.orElse(0)); // Default to 0
+    
+    
+    //Null Values: Filter out nulls explicitly:
+List<String> names1 = Arrays.asList("Alice", null, "Bob");
+List<String> nonNullNames = names1.stream()
+    .filter(Objects::nonNull)
+    .collect(Collectors.toList());
+System.out.println(nonNullNames); // [Alice, Bob]
 
             }
 }

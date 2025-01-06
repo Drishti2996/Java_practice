@@ -1,4 +1,5 @@
 public class Java8Notes {
+    // /idea.sh
     
     /**
      * Java 8 Features
